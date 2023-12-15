@@ -1,0 +1,46 @@
+Initializing a Repository:
+
+git init: Initializes a new Git repository.
+Cloning a Repository:
+
+git clone <repository_url>: Clones a repository from a URL.
+Adding and Committing Changes:
+
+git add <file>: Adds a file or changes to the staging area.
+git commit -m "commit message": Commits changes with a descriptive message.
+Checking Status and Differences:
+
+git status: Shows the status of changes as untracked, modified, or staged.
+git diff: Shows the differences between the working directory and the last commit.
+Branching:
+
+git branch: Lists all branches in the repository.
+git branch <branch_name>: Creates a new branch.
+git checkout <branch_name>: Switches to the specified branch.
+git merge <branch_name>: Merges changes from one branch into the current branch.
+Remote Repositories:
+
+git remote -v: Lists remote repositories.
+git pull: Fetches changes from a remote repository and merges them.
+git push origin <branch_name>: Pushes changes to a remote repository.
+Undoing Changes:
+
+git reset <file>: Unstages changes.
+git reset --hard: Discards all changes in the working directory.
+git revert <commit>: Reverts a commit by creating a new commit.
+Viewing Commit History:
+
+git log: Displays a log of commits.
+git log --oneline: Shows a condensed log with one line per commit.
+Tagging Releases:
+
+git tag <tag_name>: Creates a lightweight tag.
+git tag -a <tag_name> -m "tag message": Creates an annotated tag.
+Stashing Changes:
+
+git stash: Temporarily saves changes without committing.
+git stash apply: Applies the last stash.
+Configuring Git:
+
+git config --global user.name "Your Name": Sets your name.
+git config --global user.email "your@example.com": Sets your email.
