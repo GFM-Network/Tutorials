@@ -1,0 +1,46 @@
+Backup Before Attempting This!
+
+Step 1: Delete old partitions and create new ones
+Boot into your partition manager of choice (I used Parted Magic https://partedmagic.com/ ) GParted
+Delete extra partitions including the old FAT32 system partition (These all should be very small between 100 MB and up to 2 GB)
+Create new NTFS partition with 512 MB of space and label it System Reserved
+Shutdown
+
+Step 2: Setup Partitions with the correct drive letters
+Launch Windows 10 Install disc / usb
+Shift+F10 once you see language select to bring up command prompt
+Launch DISKPART
+select volume with 512MB (ex: select vol 0)
+assign letter=G: (or any letter that isn’t taken that is NOT C:)
+exit OR If Windows operating system is NOT on C:
+select volume with windows installation on it
+assign letter=C:
+exit
+
+Example output:
+diskpart
+select disk 0
+list vol
+select vol 0 <---500 MB Partition
+assign letter=G:
+select vol 1 <--- Large Partition with Windows Install on it
+assign letter=C:
+exit
+
+Partitions are done. Now time to fix problems with the “type” of partition – By forcing all partitions to be NTFS NT60
+
+bootsect.exe /nt60 all /force
+
+Step 3: Copy Boot Records, Fix MBR, and Rebuild BCD
+Rebuild new system reserved partition with EFI and regular boot files
+
+bcdboot c:\Windows /s <boot letter of System Reserved Partion>: /f ALL
+bcdboot c:\Windows /s G: /f ALL
+
+Now we can finally rebuild the bcd and master boot record like you see in so many online guides
+You can verify the system is seeing the windows installation by doing a bootrec /scanos and then be running through the rest of the commands to do the rest of the repairs
+bootrec /scanos <---Verify it sees the windows install
+bootrec /fixmbr
+bootrec /fixboot <----Pick the installation will mirror /scanos bootrec /rebuildbcd
+
+https://www.youtube.com/watch?v=F72D7uL6cZg
