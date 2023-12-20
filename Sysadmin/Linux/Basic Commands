@@ -1,0 +1,32 @@
+tldr > man/help
+ip a > ifconfig/ip addr show
+apt > apt-get
+apt show/apt search
+exa > ls
+ncdu > df
+duf > df -h
+dig > nslookup
+drill (ldnsutils) > nslookup
+fdfind (fd-find) > find
+btop > htop/top
+bashtop > btop
+batcat > cat
+ripgrep (rp) > grep
+micro > nano/vim (text editor)
+
+pwd (print work directory)
+whoami (username)
+touch (create files)
+mv (modify/move file)
+head/tail (show first or last file line)
+hostname -i (network interfaces)
+free-h/free-m (show memory size)
+ps aux (show processes)
+pgrep (show processes PID)
+kill (manage processes)
+ncdu (folders size)
+uname (show linux kernel)
+lscpu/lsusb/lspci (show hardware info)
+lsblk (show disk tree)
+history (show terminal history)
+
