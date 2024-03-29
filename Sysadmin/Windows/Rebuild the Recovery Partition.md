@@ -80,3 +80,45 @@
 - **System Restore and System Image Recovery**: Last resort options for system recovery.
 
 [Watch a video tutorial](https://www.youtube.com/watch?v=L7Ss-KKp010).
+
+## Reagentc /enable failing with error code 3bc3, Windows Update failing with error 800F0922
+If you are having similar issues, you can check whether this is the problem with the diskpart command. Assuming you have only one hard disk drive,
+
+```cmd
+select disk 0
+list partition
+
+You should see something like this:
+
+Partition ###  Type              Size     Offset
+-------------  ----------------  -------  -------
+Partition 1    System             500 MB  1024 KB
+Partition 2    Primary            445 GB   501 MB
+
+The smaller partition named "System" is the one you want, usually partition 1, so
+
+select partition 1
+detail partition
+
+And you should see something like this:
+
+Partition 1
+Type    : c12a7328-f81f-11d2-ba4b-00a0c93ec93b
+Hidden  : Yes
+Required: No
+Attrib  : 0XC000000000000000
+Offset in Bytes: 1048576
+
+Volume ###  Ltr  Label        Fs     Type        Size     Status     Info
+----------  ---  -----------  -----  ----------  -------  ---------  --------
+Volume 3                      FAT32  Partition    500 MB  Healthy    System
+
+If the file system is not FAT32 then you are not looking at the right partition. It should also be Hidden, and will not usually have a drive letter assigned unless (as in the originally posted question) it has been explicitly given one for troubleshooting purposes. It might not be exactly 500MB, but should only be taking up a small fraction of the hard disk.
+
+The type of the EFI partition should be c12a7328-f81f-11d2-ba4b-00a0c93ec93b as shown above. If it is not, and in particular if it is ebd0a0a2-b9e5-4433-87c0-68b6b72699c7 (see Microsoft Basic Data Partition on Wikipedia) then that is likely to be the cause of the problem.
+
+If the partition type is incorrect, you can fix this with the set id command,
+
+set id=c12a7328-f81f-11d2-ba4b-00a0c93ec93b
+
+The reagentc /enable command should then work, and if you are lucky, so will Windows Update.
