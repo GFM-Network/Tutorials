@@ -78,3 +78,5 @@
 - **Uninstall Updates**: Revert problematic updates.
 - **UEFI Firmware Settings**: Access BIOS settings.
 - **System Restore and System Image Recovery**: Last resort options for system recovery.
+
+[Watch a video tutorial](https://www.youtube.com/watch?v=L7Ss-KKp010).
