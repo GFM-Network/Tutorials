@@ -1,0 +1,80 @@
+## Setup Recovery Partition
+
+1. **Create Recovery Partition**: Allocate at least 1GB of space for the recovery partition.
+2. **Format Partition**: Format the recovery partition as NTFS.
+
+## DISKPART Changes
+
+- Select disk 0.
+- Select the last partition (partition 3).
+- Display partition details.
+- Set the partition ID to "de94bba4-06d1-4d40-a16a-bfd50179d6ac" (GPTDisk).
+
+    - **Note**: For MBR, use id=27; for GPT, use id="ebd0a0a2-b9e5-4433-87c0-68b6b72699c7".
+    - _Create Partition if Missing!_
+        ```plaintext
+        cre par pri size=605 id=de94bba4-06d1-4d40-a16a-bfd50179d6ac
+        ```
+    - Format the partition as NTFS quickly with the label "WinRE".
+        ```plaintext
+        format fs=ntfs quick label=WinRE
+        ```
+    - Assign drive letter "Z".
+        ```plaintext
+        assign letter=z
+        ```
+    - For UEFI only, set attributes.
+        ```plaintext
+        gpt attributes=0x8000000000000001
+        ```
+
+## Configure WinRE
+
+- Disable WinRE:
+    ```plaintext
+    reagentc /disable
+    ```
+- Verify presence of WinRE.wim:
+    ```plaintext
+    ls "C:\Windows\System32\Recovery" | FindStr /I "WinRE.wim" ; ls "C:\Windows\System32\Recovery" -Hidden | FindStr /I "WinRE.wim"
+    ```
+    - If missing, copy WinRE.wim and ReAgent.xml from installation media to `C:\Windows\System32\Recovery`.
+
+- Enable WinRE:
+    ```plaintext
+    reagentc /enable
+    ```
+    - Verify settings:
+    ```plaintext
+    reagentc /info
+    ```
+
+- If `reagentc /enable` fails:
+    - Manually copy WinRE.wim to `Z:\Recovery\WindowsRE`.
+    - Set the REimage path:
+        ```plaintext
+        reagentc /SetREimage /Path "Z:\Recovery\WindowsRE"
+        ```
+    - Enable WinRE:
+        ```plaintext
+        reagentc /Enable
+        ```
+    - Verify with:
+        ```plaintext
+        reagentc /Info
+        ```
+
+## Rebooting to Recovery Partition
+
+- Boot into the recovery menu by holding Shift while restarting.
+- Alternatively, allow the boot process to fail three times.
+
+## Recovery Tools and Options
+
+- **Startup Repair**: Occasionally useful for resolving boot issues.
+- **Startup Settings**: Provides access to safe mode.
+- **Command Prompt**: Allows various recovery tasks like file copying, disk checking, and system file repairs.
+- **Regedit**: For registry editing.
+- **Uninstall Updates**: Revert problematic updates.
+- **UEFI Firmware Settings**: Access BIOS settings.
+- **System Restore and System Image Recovery**: Last resort options for system recovery.
