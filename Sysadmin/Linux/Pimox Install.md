@@ -27,19 +27,25 @@ apt -y upgrade
 Now that we’re ready, let’s install the Proxmox port. You can do this on all 3 Pis concurrently.
 
 apt install -y proxmox-ve 
+
 Once the installation is completed, you’ll need to reboot all 3 hosts.
 
 reboot
 Once the Pis are back online, try the URL of the first Proxmox node at port 8006:
 
 https://192.168.1.26:8006
+
 The login is root and your root password. Hopefully, you should see the main Proxmox screen being served by your Raspberry!
 
 
-We did it! One tiny bit of housekeeping while we’re thinking about it. For some reason, the repo definition needs to have the architecture defined. The install changes it back from the one we put in, so you might need to change it back.
+We did it! One tiny bit of housekeeping while we’re thinking about it. For some reason, the repo definition needs to have the architecture defined. 
+
+The install changes it back from the one we put in, so you might need to change it back.
 
 vi /etc/apt/sources.list.d/pveport.list
+
 and ensure that the square bracketed part is intact:
 
 deb [arch=arm64] https://global.mirrors.apqa.cn/proxmox/debian/pve bookworm port
+
 The next port will look at getting these new Proxmox nodes clustered and talking to each other.
