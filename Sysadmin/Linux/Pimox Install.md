@@ -21,7 +21,9 @@ echo "deb [arch=arm64] https://global.mirrors.apqa.cn/proxmox/debian/pve bookwor
 Then you’ll need to update the repo cache. Let’s run an upgrade, too, just to make sure Bookworm is up to date:
 
 apt update
+
 apt -y upgrade
+
 Now that we’re ready, let’s install the Proxmox port. You can do this on all 3 Pis concurrently.
 
 apt install -y proxmox-ve 
