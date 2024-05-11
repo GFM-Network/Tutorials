@@ -26,6 +26,8 @@ Now that we’re ready, let’s install the Proxmox port. You can do this on all
 
 apt install -y proxmox-ve 
 
+when the "pveport.list *Y/I/N/O/D/Z [default=N] ? appears choose the N for default and continue with the installation
+
 Once the installation is completed, you’ll need to reboot all 3 hosts.
 
 reboot
